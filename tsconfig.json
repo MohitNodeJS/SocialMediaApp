@@ -1,0 +1,17 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "inlineSourceMap": true,
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "target": "es2017",
+    "esModuleInterop": true,
+    "lib": ["es2020", "dom", "esnext.asynciterable"],
+    "module": "commonjs",
+    "outDir": "./.dist/",
+    "declaration": true,
+    "noUnusedLocals": false,
+    "paths": {},
+    "types": ["node"]
+  }
+}
