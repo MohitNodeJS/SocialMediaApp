@@ -55,9 +55,8 @@ export default {
       return myresponse;
     },
 
-
     //update post
-    async updatePost(parent, args, context){
+    async updatePost(parent, args, context) {
       await AuthMiddleware.Validattion(context);
       const userId = context.user._id;
       const {
@@ -65,7 +64,7 @@ export default {
           fields: { description, imgUrl, title, videoType, videoUrl },
           status,
           type,
-          id
+          id,
         },
       } = args;
 
@@ -80,7 +79,7 @@ export default {
         status,
         type,
         userId,
-        id
+        id,
       };
 
       let myresponse;
@@ -90,6 +89,6 @@ export default {
         throw new Error("error");
       }
       return myresponse;
-    }
-  }
-}
+    },
+  },
+};

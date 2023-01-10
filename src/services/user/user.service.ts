@@ -42,7 +42,7 @@ class UserServices implements IUserServices.IUserServiceAPI {
         longitude: Joi.string().max(15).optional(),
       }).optional(),
       status: Joi.string().optional(),
-      roles:Joi.string().optional(),
+      roles: Joi.string().optional(),
     });
     const params = schema.validate(request);
 
@@ -51,7 +51,7 @@ class UserServices implements IUserServices.IUserServiceAPI {
       response.error = toError(params.error.details[0].message);
       return response;
     }
-    const { firstName, lastName, email, password, address, status ,roles} =
+    const { firstName, lastName, email, password, address, status, roles } =
       params.value;
 
     // Check if email is already registered
@@ -75,7 +75,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
     /// password hash
     const salt = await bcrypt.genSalt(10);
     const passwordhash = await bcrypt.hash(request.password, salt);
-  
 
     //Save the user to storage
     const attributes: IUSER = {
@@ -225,9 +224,9 @@ class UserServices implements IUserServices.IUserServiceAPI {
     let token;
     try {
       //get user bu email id to check it exist or not
-      data = await this.userStore.findOneData({ email,  });
+      data = await this.userStore.findOneData({ email });
 
-      token = await jwt.sign({ _id: data._id ,roles:data.roles}, "mykey", {
+      token = await jwt.sign({ _id: data._id, roles: data.roles }, "mykey", {
         expiresIn: "1d",
       });
 
@@ -316,7 +315,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
       return response;
     }
     const newOTP = otp(999999);
-
 
     // node mailer
     const transporter = await nodemailer.createTransport(

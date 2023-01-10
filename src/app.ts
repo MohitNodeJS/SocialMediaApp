@@ -1,8 +1,8 @@
 import express, { Application } from "express";
 import { ApolloServer } from "apollo-server-express";
-import mongoose,{ connect, ConnectOptions } from "mongoose";
+import mongoose, { connect, ConnectOptions } from "mongoose";
 //import { executableSchema as schema } from "./graphql/schema";
-import resolvers from "./graphql/resolvers/index"
+import resolvers from "./graphql/resolvers/index";
 import typeDefs from "./graphql/schema";
 export default class App {
   public app: Application;
@@ -16,8 +16,8 @@ export default class App {
   }
 
   private connectToMongo() {
-    const DB_url = 'mongodb://localhost:27017/app';
-    mongoose.set('strictQuery', true);
+    const DB_url = "mongodb://localhost:27017/app";
+    mongoose.set("strictQuery", true);
     connect(DB_url, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
@@ -31,16 +31,13 @@ export default class App {
       });
   }
 
-
-
-  
   private async initializeApollo() {
     const server = new ApolloServer({
       //schema,
-    
+
       typeDefs,
       resolvers,
-      context: async ({ req }) => ({ token: req.headers.authorization })
+      context: async ({ req }) => ({ token: req.headers.authorization }),
     });
 
     this.app.get("/", (_, res) => {
@@ -56,4 +53,3 @@ export default class App {
     });
   }
 }
-  

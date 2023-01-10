@@ -29,17 +29,16 @@ export default class UserStore {
     }
     return savedUser;
   }
-  
 
   public async findOneData(attributes: object) {
-    try{
-      const a =await UserDb.findOne(attributes).lean();
-       return a
-    }catch(e){
+    try {
+      const a = await UserDb.findOne(attributes).lean();
+      return a;
+    } catch (e) {
       return Promise.reject(new UserStore.OPERATION_UNSUCCESSFUL());
     }
   }
- 
+
   public async findOneDataAndUpdate(attributes: object, toUpdate: object) {
     return await UserDb.findOneAndUpdate(attributes, toUpdate).lean();
   }

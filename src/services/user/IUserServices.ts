@@ -1,12 +1,16 @@
 import IUSER from "../../utils/interface/IUser";
 import { IResponse } from "../../utils/interface/common";
 export interface IUserServiceAPI {
-    userRegister(request: IuserRegister): Promise<IRegisterUserResponse>;
-    login(request: ILoginUserRequest):Promise<ILoginUserResponse>;
-    verifyEmail(request:IUserVerifyRequest) :Promise<IUserVerifyResponse>;
-    resendVerifyEmail(request:IResendVerifyEmailRequest):Promise<IResendVerifyEmailResponse>;
-    resetPassword(request:IResetPasswordRequest):Promise<IResetPasswordResponse>;
-    getProfile(request:IGetUserRequest):Promise<IGetUserResponse>;
+  userRegister(request: IuserRegister): Promise<IRegisterUserResponse>;
+  login(request: ILoginUserRequest): Promise<ILoginUserResponse>;
+  verifyEmail(request: IUserVerifyRequest): Promise<IUserVerifyResponse>;
+  resendVerifyEmail(
+    request: IResendVerifyEmailRequest
+  ): Promise<IResendVerifyEmailResponse>;
+  resetPassword(
+    request: IResetPasswordRequest
+  ): Promise<IResetPasswordResponse>;
+  getProfile(request: IGetUserRequest): Promise<IGetUserResponse>;
 }
 interface Iaddress {
   location: string;
@@ -25,7 +29,7 @@ export interface IuserRegister {
   address: Iaddress;
   otp?: Number;
   status: string;
-  roles:string;
+  roles: string;
 }
 export interface IRegisterUserResponse extends IResponse {
   message: string;
@@ -34,51 +38,50 @@ export interface IRegisterUserResponse extends IResponse {
 export interface IUserVerifyResponse extends IResponse {
   message: string;
   user?: IUSER;
-  email:string;
-  otp:Number
+  email: string;
+  otp: Number;
 }
-export  interface IUserVerifyRequest{
-    email:string;
-    otp:Number
+export interface IUserVerifyRequest {
+  email: string;
+  otp: Number;
 }
-export  interface IUserVerifyResponse{
-  email:string;
-  otp:Number
-}
-
-export interface IUserLogin{
-  email:string;
-  password:string
-}
-export  interface IResendVerify{
-  email:string;
-  password:string;
-}
-export  interface IForgetPassword{
-  email:string; 
-}
-export  interface IResetPassword{
-  email:string; 
-  newPassword:string; 
-  otp:Number
+export interface IUserVerifyResponse {
+  email: string;
+  otp: Number;
 }
 
-export  interface IGetProfile{
-  idUser:string,
+export interface IUserLogin {
+  email: string;
+  password: string;
+}
+export interface IResendVerify {
+  email: string;
+  password: string;
+}
+export interface IForgetPassword {
+  email: string;
+}
+export interface IResetPassword {
+  email: string;
+  newPassword: string;
+  otp: Number;
 }
 
+export interface IGetProfile {
+  idUser: string;
+}
 
 /********************************************************************************
  * Login
  ********************************************************************************/
-export interface ILoginUserRequest {  
+export interface ILoginUserRequest {
   email: string;
   password: string;
 }
 export interface ILoginUserResponse extends IResponse {
   user?: IUSER;
   token?: string;
-  message?:string;
+  message?: string;
 }
 
 /////////////////////////////////////////////////////
@@ -97,15 +100,15 @@ export interface IResendVerifyEmailResponse extends IResponse {
 //resetPassword
 ///////////////////////////////////
 export interface IResetPasswordRequest {
-  email:string; 
-  newPassword:string; 
-  otp:Number
+  email: string;
+  newPassword: string;
+  otp: Number;
 }
 export interface IResetPasswordResponse extends IResponse {
   message: string;
   data: IUSER;
-  email:string;
-  otp:Number
+  email: string;
+  otp: Number;
 }
 
 ///////////////////////////////
@@ -113,7 +116,7 @@ export interface IResetPasswordResponse extends IResponse {
 ///////////////////////////
 
 export interface IGetUserRequest {
-  userID: string,
+  userID: string;
 }
 export interface IGetUserResponse extends IResponse {
   message: string;

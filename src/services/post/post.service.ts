@@ -13,7 +13,7 @@ class PostServices implements IPostServices.IPostServiceAPI {
 
   async addPosts(request: any) {
     const user = await this.userStore.findOneData({ _id: request.userId });
-    
+
     if (!user) {
       throw new Error("Invalid Credentials user not found");
     }
