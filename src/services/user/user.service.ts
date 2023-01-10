@@ -45,7 +45,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
       roles:Joi.string().optional(),
     });
     const params = schema.validate(request);
-    console.log(params, "service parms");
 
     if (params.error) {
       response.status = STATUS_CODES.UNPROCESSABLE_ENTITY;
@@ -54,13 +53,11 @@ class UserServices implements IUserServices.IUserServiceAPI {
     }
     const { firstName, lastName, email, password, address, status ,roles} =
       params.value;
-    console.log(params.value, "parmas value service");
 
     // Check if email is already registered
     let existingUser: IUSER;
     try {
       const existingUser = await this.userStore.findOneData({ email });
-      console.log(existingUser, "existingUser service");
 
       if (existingUser && existingUser?.email) {
         const errorMsg = ErrorMessageEnum.EMAIL_ALREADY_EXIST;
@@ -78,7 +75,7 @@ class UserServices implements IUserServices.IUserServiceAPI {
     /// password hash
     const salt = await bcrypt.genSalt(10);
     const passwordhash = await bcrypt.hash(request.password, salt);
-    //request.password = passwordhash;
+  
 
     //Save the user to storage
     const attributes: IUSER = {
@@ -128,7 +125,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
     let user: IUSER;
     try {
       user = await this.userStore.userRegister(attributes);
-      console.log(user, "user service save code");
     } catch (e) {
       console.error(e);
       response.status = STATUS_CODES.INTERNAL_SERVER_ERROR;
@@ -163,27 +159,22 @@ class UserServices implements IUserServices.IUserServiceAPI {
     //   console.error(params.error);
     // }
     const extUser = await this.userStore.findOneData({ email: request.email });
-    //console.log(extUser,"extUser serivce");
     if (!extUser) {
-      //throw new Error("Email donesnot exist");
       const errorMsg = ErrorMessageEnum.EmailInvalid;
       response.status = STATUS_CODES.BAD_REQUEST;
       response.error = toError(errorMsg);
       return response;
     }
     if (extUser.emailVerified == 1) {
-      //throw new Error("Email allready Verified");
       const errorMsg = ErrorMessageEnum.Email_Allready_Verified;
       response.status = STATUS_CODES.BAD_REQUEST;
       response.error = toError(errorMsg);
       return response;
     }
     const userOTP = request.otp;
-    // console.log(userOTP,"service userOTP");
 
     // compaire otp for input and existing otp in db
     if (extUser.otp !== userOTP) {
-      // throw new Error("invalid Otp");
       const errorMsg = ErrorMessageEnum.Invalid_Otp;
       response.status = STATUS_CODES.BAD_REQUEST;
       response.error = toError(errorMsg);
@@ -205,7 +196,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
     response.status = STATUS_CODES.OK;
     response.user = updateVerifyCheck;
     response.message = "Success";
-    // console.log(response, "test response data");
     return response;
   };
 
@@ -216,16 +206,12 @@ class UserServices implements IUserServices.IUserServiceAPI {
     const response: IUserServices.ILoginUserResponse = {
       status: STATUS_CODES.UNKNOWN_CODE,
     };
-    console.log("service Working");
-
     const schema = Joi.object().keys({
       email: Joi.string().email().required(),
       password: Joi.string().required(),
     });
-    // console.log(schema,"cehck service login schema");
 
     const params = schema.validate(request);
-    console.log(params, "parms data service");
 
     if (params.error) {
       console.error(params.error);
@@ -233,12 +219,9 @@ class UserServices implements IUserServices.IUserServiceAPI {
       response.error = toError(params.error.details[0].message);
       return response;
     }
-    // const { email, password } = params.value;
     const { email, password } = params.value;
-    console.log(params.value, "params.value; service");
 
     let data: IUSER;
-    console.log(data, "service trst");
     let token;
     try {
       //get user bu email id to check it exist or not
@@ -247,8 +230,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
       token = await jwt.sign({ _id: data._id ,roles:data.roles}, "mykey", {
         expiresIn: "1d",
       });
-
-      console.log(data);
 
       // check email is verified or not
       if (data.emailVerified == 0) {
@@ -275,7 +256,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
 
     //comparing password to insure that password is correct
     const isValid = await bcrypt.compare(password, data?.password);
-    console.log(isValid, "isValid service");
 
     //if isValid or user.password is null
     if (!isValid || !data?.password) {
@@ -287,13 +267,7 @@ class UserServices implements IUserServices.IUserServiceAPI {
     response.status = STATUS_CODES.OK;
     response.message = "Success";
     response.token = token;
-    // console.log(response.token, "token serivce");
-    // console.log(response.user, "response.user service test");
-
     response.user = data;
-    // console.log(response.user, "response.user service test123");
-    // console.log(response, "final response service");
-
     return response;
   };
 
@@ -309,7 +283,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
     const extUser: any = await this.userStore.findOneData({
       email: request?.email,
     });
-    // console.log(extUser, "service");
 
     if (!extUser) {
       //throw new Error("Email dont exist");
@@ -333,7 +306,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
       request?.password,
       extUser.password
     );
-    // console.log(validPassword, "service1");
 
     // in case of invalid password throw error
     if (!validPassword) {
@@ -345,7 +317,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
     }
     const newOTP = otp(999999);
 
-    // console.log(newOTP, "servotp");
 
     // node mailer
     const transporter = await nodemailer.createTransport(
@@ -394,7 +365,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
     response.status = STATUS_CODES.OK;
     response.user = data;
     response.message = "Success";
-
     return response;
   };
 
@@ -471,7 +441,6 @@ class UserServices implements IUserServices.IUserServiceAPI {
     try {
       // user = await this.userStore.getByAttributes({ _id });
       const user = await this.userStore.findOneData({ _id: request?.userID });
-      console.log(user, "user Service");
 
       //if user's id is incorrect
       if (!user) {

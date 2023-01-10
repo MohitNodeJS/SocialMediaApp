@@ -1,9 +1,7 @@
 import fs from 'fs'
 class FileUpload{
-   async singleUpload(parent,args){
-   
-    // console.log(args)
-    // console.log("hhhh")
+   async singleUpload(parent,args){ 
+    
     const { createReadStream, filename } = await args.file;
       
       const stream = createReadStream();

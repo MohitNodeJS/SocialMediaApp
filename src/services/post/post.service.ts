@@ -6,9 +6,6 @@ import UserStore from "../../services/user/user.store";
 class PostServices implements IPostServices.IPostServiceAPI {
   private userStore = new UserStore();
   private postStore = new PostStore();
-  private postStore1 = new TextPostDb();
-  private imageStore = new ImagePostDb();
-  private videoStore = new VideoPostDb();
   private proxy: IAppServiceProxy;
   constructor(proxy: IAppServiceProxy) {
     this.proxy = proxy;
@@ -16,9 +13,7 @@ class PostServices implements IPostServices.IPostServiceAPI {
 
   async addPosts(request: any) {
     const user = await this.userStore.findOneData({ _id: request.userId });
-    // if(user.roles!="admin"){
-    //   throw new Error("only admin creates");
-    // }
+    
     if (!user) {
       throw new Error("Invalid Credentials user not found");
     }
@@ -42,9 +37,7 @@ class PostServices implements IPostServices.IPostServiceAPI {
             title: request.fields.title,
             description: request.fields.description,
           };
-          console.log("text", textArgs);
           const saveTextPost = await this.postStore.addTextPosts(textArgs);
-          console.log(saveTextPost, "saveTextPost");
           break;
         } catch (error) {
           throw new Error("oops somthing went wrong while saving text");
@@ -60,7 +53,6 @@ class PostServices implements IPostServices.IPostServiceAPI {
             imgUrl: request?.fields.imgUrl,
           };
           const saveImagePost = await this.postStore.addImagePosts(imgArgs);
-          console.log(saveImagePost, "saveImagePost");
           break;
         } catch (error) {
           throw new Error("oops somthing went wrong while saving image");
@@ -77,7 +69,6 @@ class PostServices implements IPostServices.IPostServiceAPI {
             videoType: request.fields.videoType,
           };
           const saveVideoPost = await this.postStore.addVideoPosts(videoArgs);
-          console.log(saveVideoPost, "saveVideoPost");
           break;
         } catch (error) {
           throw new Error("oops somthing went wrong while saving video");
@@ -194,7 +185,7 @@ class PostServices implements IPostServices.IPostServiceAPI {
       return {
         type: data.type,
         status: data.status,
-        message: "successfully saved",
+        message: "Successfully Saved",
       };
     } catch (e) {
       return e;

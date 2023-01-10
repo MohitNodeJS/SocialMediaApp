@@ -24,31 +24,20 @@ export default class UserStore {
     let savedUser: IUSER;
     try {
       savedUser = await user.save();
-      console.log(savedUser,"userStore");
-      
     } catch (e) {
       return e;
     }
     return savedUser;
   }
-  // async userRegister(userInput:IUSER){
-  //   const user =new UserDb(userInput)
-  //   let savedUser:IUSER ;
-  //   savedUser =await user.save();
-  //   return savedUser
-  // }
+  
 
   public async findOneData(attributes: object) {
     try{
       const a =await UserDb.findOne(attributes).lean();
-      console.log(a,"store");
-      
        return a
     }catch(e){
       return Promise.reject(new UserStore.OPERATION_UNSUCCESSFUL());
     }
-    // let user=await UserDb.findOne(attributes).lean();
-    // return user
   }
  
   public async findOneDataAndUpdate(attributes: object, toUpdate: object) {

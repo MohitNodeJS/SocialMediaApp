@@ -101,7 +101,6 @@ export default class PostStore {
       { $set: attributes },
       { new: true }
     ).lean();
-    // console.log(a, "update store text");
     return a;
   }
   public async imagePostUpd(_id: string, attributes: object) {
@@ -110,7 +109,6 @@ export default class PostStore {
       { $set: attributes },
       { new: true }
     ).lean();
-    // console.log(a, "update store text");
     return a;
   }
   public async videoPostUpd(_id: string, attributes: object) {
@@ -119,7 +117,6 @@ export default class PostStore {
       { $set: attributes },
       { new: true }
     ).lean();
-    // console.log(a, "update store text");
     return a;
   }
 }

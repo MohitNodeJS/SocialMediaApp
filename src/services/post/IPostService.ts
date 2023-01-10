@@ -4,24 +4,7 @@ export interface IPostServiceAPI {
     getTimeLine(request: IGetPost);
 }
 
-// export interface ITextPost extends IImagePost{
-//     _id?:string;
-//     post_Id?:string;
-//     user_Id?:string;
-//     title:string;
-//     description:string
-// }
-// export interface IImagePost extends IVideoPost{
-//     imgUrl?:string
-// }
-// interface IVideo {
-//     videoType?: string;
-//     videoUrl?: string
-// }
-// export interface IVideoPost {
-//     postId?:string
-//     video?:IVideo
-// }
+
 export interface IGetPost {
     userId?:string;
 }
@@ -47,9 +30,9 @@ export interface IAddPost{
     fields:ITextPost
 }
 
-/////////////////////
+/////////////////////////////////////////
 //update post
-////////////
+////////////////////////////////////////
 export interface IGetPost {
     userId?:string;
 }
