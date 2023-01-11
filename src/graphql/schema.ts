@@ -98,20 +98,13 @@ type Authentication {
    password:String,
 }
 type Query {
-    # hello: String,
     verifyEmailOtp(OTP:iOTP):newOTP,
     login(email: String, password: String): Authentication
-    # forgetPassword(forgetPassword:iforgetPassword):forgetPassword,
-    
     getProfile:GetProfile,
     getAllUser:register,
-    uploads: [File],
     getTimeLine:PostData,
-    # verifyEmailOtp(OTP:iOTP):newOTP,
-    # logInUser(login:logInput):login,
-
 }
-scalar FileUpload
+
 enum videotype{
     youtube,
     dailymotion,
@@ -131,11 +124,7 @@ enum etype {
     image,
     video,
 }
-# input iuserPost{
-#     type:String,
-#     status:String,
-#     # fields:String!,
-# }
+
 input iuserPost{
     type:etype,
     fields:ifields,
@@ -202,14 +191,14 @@ input logInput {
     status:poststatus
 }
 type Mutation{
-    # userRegistor(register:iregister):register,
+    # USER API_Schema
     userRegistor(register:iregister):UserDeatils
     resendVerifyEmail(resendOTP:iresendOTP):resendOTP
     resetPassword(resetPassword:iresetPassword):resetPassword
-    addPosts(userPost:iuserPost):userPost,
 
+    # POST API_Schema
+    addPosts(userPost:iuserPost):userPost,
     updatePost(userPost:iUpdPost):userPost,
-    singleUpload(file:FileUpload!):File!
     
   }  
 `;

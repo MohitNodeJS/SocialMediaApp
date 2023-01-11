@@ -1,11 +1,10 @@
 import proxy from "../../services/app_service_proxy";
 import * as IPostServices from "../../services/post/IPostService";
 import AuthMiddleware from "../../utils/middleware/auth_middleware";
-//  const userPostResolvers = {
 
 export default {
   Query: {
-    //hello: () => 'world'
+    
     async getTimeLine(parent, args, context) {
       await AuthMiddleware.Validattion(context);
       const userId = context.user._id;

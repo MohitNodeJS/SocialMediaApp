@@ -4,7 +4,7 @@ const fileResolvers = {
     //hello: () => 'world'
   },
   Mutation: {
-    singleUpload: FileUpload.singleUpload,
+    // singleUpload: FileUpload.singleUpload,
   },
 };
 export default fileResolvers;
