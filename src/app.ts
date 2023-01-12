@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import { ApolloServer } from "apollo-server-express";
 import mongoose, { connect, ConnectOptions } from "mongoose";
 //import { executableSchema as schema } from "./graphql/schema";
+// import resolvers from "./graphql/resolvers/index";
 import resolvers from "./graphql/resolvers/index";
 import typeDefs from "./graphql/schema";
 import { config } from "dotenv";

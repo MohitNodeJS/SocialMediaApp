@@ -1,4 +1,4 @@
-import FileUpload from "../../services/file_upload";
+import FileUpload from "../../../services/file_upload";
 const fileResolvers = {
   Query: {
     //hello: () => 'world'

@@ -1,12 +1,12 @@
-import IPOST from "../../utils/interface/IPost";
+import IPOST from "../../utils/interface/user/IPost";
 import { model, Schema, Model } from "mongoose";
-import postMongoose from "../../models/user_post";
-import imagePost from "../../models/post_img";
-import textPost from "../../models/post_text";
-import videoPost from "../../models/post_video";
-import ITEXTPOST from "../../utils/interface/ITextPost";
-import IIMAGEPOST from "../../utils/interface/IImagePost";
-import IVIDEOPOST from "../../utils/interface/IVideoPost";
+import postMongoose from "../../models/user.model/user_post";
+import imagePost from "../../models/user.model/post_img";
+import textPost from "../../models/user.model/post_text";
+import videoPost from "../../models/user.model/post_video";
+import ITEXTPOST from "../../utils/interface/user/ITextPost";
+import IIMAGEPOST from "../../utils/interface/user/IImagePost";
+import IVIDEOPOST from "../../utils/interface/user/IVideoPost";
 export interface IPostModel extends IPOST {
   _id: string;
 }
@@ -105,6 +105,16 @@ export default class PostStore {
     }
   }
 
+  public async findbyID(attributes: object) {
+    try {
+      let a = await PostDb.findOne(attributes).lean();
+      return a;
+    } catch (e) {
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
+  }
+
+
   public async findtxtdbdata(attributes: object) {
     try {
       let a = await TextPostDb.findOne(attributes).lean();
@@ -183,5 +193,30 @@ export default class PostStore {
       return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
     }
     
+  }
+
+
+  public async getByAttributes(attributes: object): Promise<IPOST> {
+    try {
+      return await PostDb.findOne(attributes).lean();
+    } catch (e) {
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
+  }
+
+  public async getTextPost(attributes: object): Promise<ITEXTPOST> {
+    try {
+      return await TextPostDb.findOne(attributes).lean();
+    } catch (e) {
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
+  }
+
+  public async getImagePost(attributes: object): Promise<ITEXTPOST> {
+    try {
+      return await ImagePostDb.findOne(attributes).lean();
+    } catch (e) {
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
   }
 }

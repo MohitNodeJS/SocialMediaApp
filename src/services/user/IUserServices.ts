@@ -1,6 +1,8 @@
-import IUSER from "../../utils/interface/IUser";
+import IUSER from "../../utils/interface/user/IUser";
 import { IResponse } from "../../utils/interface/common";
+import { IRegisterSchoolRequest } from "../school/ISchoolServices";
 export interface IUserServiceAPI {
+
   userRegister(request: IuserRegister): Promise<IRegisterUserResponse>;
   login(request: ILoginUserRequest): Promise<ILoginUserResponse>;
   verifyEmail(request: IUserVerifyRequest): Promise<IUserVerifyResponse>;

@@ -1,6 +1,6 @@
 
 import { nanoid } from "nanoid";
-import { role } from "../utils/role/role";
+import { role } from "../../utils/role/role";
 export default  {
   _id:{
       type:String,

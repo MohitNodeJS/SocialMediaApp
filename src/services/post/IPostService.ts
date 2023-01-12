@@ -1,16 +1,25 @@
 import { IResponse } from "src/utils/interface/common";
-import IPOST from "../../utils/interface/IPost";
+import ITEXTPOST from "src/utils/interface/user/ITextPost";
+import IPOST from "../../utils/interface/user/IPost";
 
 export interface IPostServiceAPI {
   // addPosts(request: IAddPost);
   addPosts(request: IAddPostRequest): Promise<IAddPostResponse>;
   updatePost(request: IUpdatePost);
+  get(request: IGetPostRequest):Promise<IGetPostResponse>;
   // getTimeLine(request: IGetPost);
 }
-
-export interface IGetPost {
-  userId?: string;
+export interface IGetPostRequest {
+  _id: string;
 }
+export interface IGetPostResponse extends IResponse {
+  post?: IPOST;
+  textpost?:ITEXTPOST;
+  imagepost?:IImagePost;
+}
+// export interface IGetPost {
+//   userId?: string;
+// }
 export interface ITextPost extends IImagePost {
   userId?: string;
   postId?: string;
@@ -83,6 +92,7 @@ export interface IAddPostRequest {
 }
 
 export interface IAddPostResponse extends IResponse {
+  type: string;
   message: string;
   post?: IPOST;
 }

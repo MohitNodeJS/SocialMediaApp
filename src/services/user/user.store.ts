@@ -1,6 +1,6 @@
-import IUSER from "../../utils/interface/IUser";
+import IUSER from "../../utils/interface/user/IUser";
 import { model, Schema, Model } from "mongoose";
-import userMongoose from "../../models/user";
+import userMongoose from "../../models/user.model/user";
 export interface IUserModel extends IUSER {
   _id: string;
 }
@@ -31,6 +31,14 @@ export default class UserStore {
   }
 
   public async findOneData(attributes: object) {
+    try {
+      const a = await UserDb.findOne(attributes).lean();
+      return a;
+    } catch (e) {
+      return Promise.reject(new UserStore.OPERATION_UNSUCCESSFUL());
+    }
+  }
+  public async findbyID(attributes: object) {
     try {
       const a = await UserDb.findOne(attributes).lean();
       return a;

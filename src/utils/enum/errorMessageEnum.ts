@@ -18,6 +18,7 @@ enum ErrorMessageEnum {
     TextUpdateError="oops somthing went wrong while update text",
     ImageUpdateError="oops somthing went wrong while update image",
     VideoUpdateError="oops somthing went wrong while Update video",
+    PermissionCheck="Editor user ID not match post User ID",
     
   }
   

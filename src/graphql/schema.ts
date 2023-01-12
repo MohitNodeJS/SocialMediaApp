@@ -1,11 +1,4 @@
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import userResolvers from "../graphql/resolvers/user_resolver";
-import postResolvers from "../graphql/resolvers/user_posts_resolver";
-import fileResolvers from "./resolvers/file_upload_resolver";
-import { merge } from "lodash";
 import gql from "graphql-tag";
-// const typeDefs = `#graphql
-// const typeDefs=gql`
 const typeDefs = gql`
   type File {
     filename: String!
@@ -102,12 +95,31 @@ const typeDefs = gql`
     email: String
     password: String
   }
+  type POST {
+    type: String
+    status: String
+    textPost: TextPostData
+  }
+  type TextPostData {
+    title: String
+    description: String
+  }
+  type loginSchoolUser{
+    status: String!
+    token: String!
+    school: School!
+    message: String
+  }
   type Query {
     verifyEmailOtp(OTP: iOTP): newOTP
     login(email: String, password: String): Authentication
     getProfile: GetProfile
     getAllUser: register
+    getPost(_id: String!): POST
     # getTimeLine:PostData,
+
+    # school login
+    loginSchool(email: String, password: String): loginSchoolUser
   }
 
   enum videotype {
@@ -193,6 +205,31 @@ const typeDefs = gql`
     fields: ifields
     status: poststatus
   }
+
+  type School {
+    schoolName: String,
+    email:String,
+    password:String,
+    role:String,
+    address: SchoolAddress,
+  }
+
+  type SchoolAddress {
+    city: String,
+    state: String,
+  }
+
+  input ISchoolAddress {
+    city: String,
+    state: String,
+  }
+  input ISchoolRegistor {
+    schoolName: String,
+    email:String,
+    password:String,
+    role:String,
+    address: ISchoolAddress,
+  }
   type Mutation {
     # USER API_Schema
     userRegistor(register: iregister): UserDeatils
@@ -202,16 +239,10 @@ const typeDefs = gql`
     # POST API_Schema
     addPosts(userPost: iuserPost): userPost
     updatePost(userPost: iUpdPost): userPost
+
+    # School API_
+    schoolRegistor(school: ISchoolRegistor): School
   }
 `;
 
 export default typeDefs;
-
-// export const userresolvers = merge(userResolvers);
-// export const postresolvers=merge(postResolvers);
-// export const fileresolver=merge(fileResolvers);
-// export const typeDef=merge(typeDefs);
-// export const executableSchema = makeExecutableSchema({
-//   resolvers: { ...userresolvers,...postresolvers,...fileResolvers },
-//   typeDefs
-// });
