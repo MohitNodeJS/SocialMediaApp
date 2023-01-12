@@ -4,6 +4,9 @@ import mongoose, { connect, ConnectOptions } from "mongoose";
 //import { executableSchema as schema } from "./graphql/schema";
 import resolvers from "./graphql/resolvers/index";
 import typeDefs from "./graphql/schema";
+import { config } from "dotenv";
+config();
+
 export default class App {
   public app: Application;
   public port: number;
@@ -16,7 +19,8 @@ export default class App {
   }
 
   private connectToMongo() {
-    const DB_url = "mongodb://localhost:27017/app";
+    // const DB_url = "mongodb://localhost:27017/app";
+    const DB_url=process.env.DATABASE_URL;
     mongoose.set("strictQuery", true);
     connect(DB_url, {
       useUnifiedTopology: true,

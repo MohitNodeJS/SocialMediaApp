@@ -40,6 +40,12 @@ export default class UserStore {
   }
 
   public async findOneDataAndUpdate(attributes: object, toUpdate: object) {
-    return await UserDb.findOneAndUpdate(attributes, toUpdate).lean();
+    try {
+      const a = await UserDb.findOneAndUpdate(attributes, toUpdate).lean();
+      return a;
+    } catch (e) {
+      return Promise.reject(new UserStore.OPERATION_UNSUCCESSFUL());
+    }
+    
   }
 }

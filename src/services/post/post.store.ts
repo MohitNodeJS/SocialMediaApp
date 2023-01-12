@@ -42,11 +42,20 @@ export const VideoPostDb: Model<IVideoPostModel> = model<IVideoPostModel>(
 );
 
 export default class PostStore {
+  public static OPERATION_UNSUCCESSFUL = class extends Error {
+    constructor() {
+      super("An error occured while processing the request.");
+    }
+  };
   /* createPost  */
-  async addPosts(postInput: IPOST) {
+  async addPosts(postInput: IPOST): Promise<IPOST> {
     const post = new PostDb(postInput);
     let savedPost: IPOST;
-    savedPost = await post.save();
+    try {
+      savedPost = await post.save();
+    } catch (e) {
+      return e;
+    }
     return savedPost;
   }
 
@@ -54,7 +63,11 @@ export default class PostStore {
   async addTextPosts(postTextInput: ITEXTPOST) {
     const postText = new TextPostDb(postTextInput);
     let savedPost: ITEXTPOST;
-    savedPost = await postText.save();
+    try {
+      savedPost = await postText.save();
+    } catch (e) {
+      return e;
+    }
     return savedPost;
   }
 
@@ -62,7 +75,11 @@ export default class PostStore {
   async addImagePosts(postImageInput: IIMAGEPOST) {
     const postImage = new ImagePostDb(postImageInput);
     let savedPost: IIMAGEPOST;
-    savedPost = await postImage.save();
+    try {
+      savedPost = await postImage.save();
+    } catch (e) {
+      return e;
+    }
     return savedPost;
   }
 
@@ -70,21 +87,49 @@ export default class PostStore {
   async addVideoPosts(postVideoInput: IVIDEOPOST) {
     const postVideo = new VideoPostDb(postVideoInput);
     let savedPost: IVIDEOPOST;
-    savedPost = await postVideo.save();
+    try {
+      savedPost = await postVideo.save();
+    } catch (e) {
+      return e;
+    }
     return savedPost;
   }
 
+
   public async findOneData(attributes: object) {
-    return await PostDb.findOne(attributes).lean();
+    try {
+      let a = await PostDb.findOne(attributes).lean();
+      return a;
+    } catch (e) {
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
   }
+
   public async findtxtdbdata(attributes: object) {
-    return await TextPostDb.findOne(attributes).lean();
+    try {
+      let a = await TextPostDb.findOne(attributes).lean();
+      return a;
+    } catch (e) {
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
   }
+
   public async findimagedbdata(attributes: object) {
-    return await ImagePostDb.findOne(attributes).lean();
+    try {
+      let a = await ImagePostDb.findOne(attributes).lean();
+      return a;
+    } catch (e) {
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
   }
+
   public async findvideodbdata(attributes: object) {
-    return await VideoPostDb.findOne(attributes).lean();
+    try {
+      let a = await VideoPostDb.findOne(attributes).lean();
+      return a;
+    } catch (e) {
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
   }
 
   public async find() {
@@ -92,31 +137,51 @@ export default class PostStore {
   }
 
   public async findOneDataAndUpdate(attributes: object, toUpdate: object) {
-    return await PostDb.findByIdAndUpdate(attributes, toUpdate).lean();
+    try{
+      const a=await PostDb.findByIdAndUpdate(attributes, toUpdate).lean();
+      return a;
+    }catch(e){
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
   }
 
   public async textPostUpd(_id: string, attributes: object) {
-    let a = await TextPostDb.findByIdAndUpdate(
-      { _id },
-      { $set: attributes },
-      { new: true }
-    ).lean();
-    return a;
+    try{
+      let a = await TextPostDb.findByIdAndUpdate(
+        { _id },
+        { $set: attributes },
+        { new: true }
+      ).lean();
+      return a;
+    }catch(e){
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
+    
   }
   public async imagePostUpd(_id: string, attributes: object) {
-    let a = await ImagePostDb.findByIdAndUpdate(
-      { _id },
-      { $set: attributes },
-      { new: true }
-    ).lean();
-    return a;
+    try{
+      let a = await ImagePostDb.findByIdAndUpdate(
+        { _id },
+        { $set: attributes },
+        { new: true }
+      ).lean();
+      return a;
+    }catch(e){
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
+    
   }
   public async videoPostUpd(_id: string, attributes: object) {
-    let a = await VideoPostDb.findByIdAndUpdate(
-      { _id },
-      { $set: attributes },
-      { new: true }
-    ).lean();
-    return a;
+    try{
+      let a = await VideoPostDb.findByIdAndUpdate(
+        { _id },
+        { $set: attributes },
+        { new: true }
+      ).lean();
+      return a;
+    }catch(e){
+      return Promise.reject(new PostStore.OPERATION_UNSUCCESSFUL());
+    }
+    
   }
 }

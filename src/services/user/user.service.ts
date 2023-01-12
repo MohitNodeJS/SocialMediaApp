@@ -114,12 +114,18 @@ class UserServices implements IUserServices.IUserServiceAPI {
   </div>`,
     };
 
-    await transporter.sendMail(mailOption, function (error, info) {
-      if (error) {
-        throw new Error("email not send check email");
+    await transporter.sendMail(mailOption, function (e, info) {
+      if (e) {
+        //throw new Error("email not send check email");
+        console.error(e);
+        const errorMsg = ErrorMessageEnum.Email_NotSend;
+        response.status = STATUS_CODES.BAD_REQUEST;
+        response.error = toError(errorMsg);
+        return response;
       }
     });
 
+    
     // save
     let user: IUSER;
     try {

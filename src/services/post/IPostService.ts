@@ -1,7 +1,11 @@
+import { IResponse } from "src/utils/interface/common";
+import IPOST from "../../utils/interface/IPost";
+
 export interface IPostServiceAPI {
-  addPosts(request: IAddPost);
+  // addPosts(request: IAddPost);
+  addPosts(request: IAddPostRequest): Promise<IAddPostResponse>;
   updatePost(request: IUpdatePost);
-  getTimeLine(request: IGetPost);
+  // getTimeLine(request: IGetPost);
 }
 
 export interface IGetPost {
@@ -54,4 +58,60 @@ export interface IUpdatePost {
   type: string;
   status: string;
   fields: ITextUpdatePost;
+}
+////
+
+export interface ITextPost extends IImagePost {
+  userId?: string;
+  postId?: string;
+  title: string;
+  description: string;
+}
+export interface IImagePost extends IVideoPost {
+  imgUrl: string;
+}
+export interface IVideoPost {
+  videoType: string;
+  videoUrl: string;
+}
+export interface IAddPostRequest {
+  _id?: string;
+  userId?: string;
+  type: string;
+  status: string;
+  fields: ITextPost;
+}
+
+export interface IAddPostResponse extends IResponse {
+  message: string;
+  post?: IPOST;
+}
+
+///update post response
+
+export interface ITextUpdatePostRequest extends IImageUpdatePostRequest {
+  id?: string;
+  userId?: string;
+  postId?: string;
+  title: string;
+  description: string;
+}
+export interface IImageUpdatePostRequest extends IVideoUpdatePostRequest {
+  imgUrl: string;
+}
+export interface IVideoUpdatePostRequest {
+  videoType: string;
+  videoUrl: string;
+}
+export interface IUpdatePostRequest {
+  id?: string;
+  userId?: string;
+  type: string;
+  status: string;
+  fields: ITextUpdatePostRequest;
+}
+
+export interface IUpdatePostResponse extends IResponse {
+  message: string;
+  post?: IPOST;
 }

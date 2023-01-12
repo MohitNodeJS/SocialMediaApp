@@ -1,5 +1,6 @@
 
 import { nanoid } from "nanoid";
+import { role } from "../utils/role/role";
 export default  {
   _id:{
       type:String,
@@ -67,10 +68,15 @@ export default  {
     default:'private'
   },
   roles:{
-    type:String,
-    enum:['admin','editor1','editor2'],
-    default:'admin'
+    type: String,
+    enum: Object.values(role),
+    require:true
   },
+  // roles:{
+  //   type:String,
+  //   enum:['admin','editor1','editor2'],
+  //   default:'admin'
+  // },
   createdAt: {type: Date, default: Date.now}
  
 };
